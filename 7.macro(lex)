@@ -1,17 +1,19 @@
 
 %{
-int vcount=0;
-int ccount=0;
+int nmacro, nheader;
 %}
 %%
-[aeiouAEIOU] {vcount++;}
-[a-zA-Z] {ccount++;}
+"#define" {nmacro++;}
+"#include" {nheader++;}
+\n {}
 %%
-int yywrap(){}
+int yywrap()
+{
+return 1;
+}
 int main()
 {
-printf("enter the string with vowels and consonants:");
+printf("enter the string:\n");
 yylex();
-printf("\n no of vowels ::%d \n",vcount);
-printf("\n no of consonants ::%d \n",ccount);
+printf("Number of macros defined = %d \n Number of header files included = %d\n",nmacro,nheader);
 }
